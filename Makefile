@@ -16,16 +16,16 @@ INC = include
 
 TESTS = $(notdir $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=))))
 
-$(OUT): $(MAINFILE) $(WORKDIR)
+$(OUT): $(MAINFILE) $(WORKDIR) run
 	@$(CC) $(FLAGS) $(OPTIONS) -o $(OUT)/$(MAINFILE).exe $(wildcard $(OBJDIR)/*.o)
 
-$(MAINFILE): $(MAINFILE).c
+$(MAINFILE): $(MAINFILE).c run
 	@$(CC) $(FLAGS) $(OPTIONS) -o $(OBJDIR)/$(MAINFILE).o -c $(MAINFILE).c $(foreach folder, $(WORKDIR), -I $(folder)/$(INC))
 
 $(WORKDIR): $(wildcard $(@)/$(SRC)/*.c) $(wildcard $(@)/$(INC)/*.h) run
 	@for i in $(notdir $(foreach file, $(wildcard $(@)/$(SRC)/*.c), $(file))); do $(CC) $(FLAGS) $(OPTIONS) -o $(join $(OBJDIR)/, $${i%c}o) -c $(join $(@)/$(SRC)/, $$i) -I $(@)/$(INC); done
 
-Alltest : $(TESTS)
+Alltest : $(TESTS) run
 	@rm $(foreach file, $(notdir $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=.o)))), $(OBJDIR)/$(file))
 
 $(TESTS): $(FNCTTEST) $(WORKDIR) run

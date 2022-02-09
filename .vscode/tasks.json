@@ -14,6 +14,20 @@
 				"isDefault": true
 			},
 			"detail": "Create executable"
-		}
+		},
+		{
+			"type": "cppbuild",
+			"label": "Make Test",
+			"command": "make",
+			"args": ["Alltest"],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Lunch all test"
+		},
 	]
 }

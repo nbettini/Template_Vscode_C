@@ -6,8 +6,9 @@ OUT = bin
 
 OBJDIR = objects
 TESTDIR = test
-WORKDIR = sub1 sub2
 FNCTTEST = Fnct_test
+
+WORKDIR = sub1 sub2
 
 MAINFILE = main
 SRC = source

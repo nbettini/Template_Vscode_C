@@ -17,7 +17,6 @@ TESTS = $(notdir $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(fold
 
 $(OUT): $(MAINFILE) $(WORKDIR)
 	@$(CC) $(FLAGS) $(OPTIONS) -o $(OUT)/$(MAINFILE).exe $(wildcard $(OBJDIR)/*.o)
-	@$(OUT)/$(MAINFILE).exe
 
 $(MAINFILE): $(MAINFILE).c
 	@$(CC) $(FLAGS) $(OPTIONS) -o $(OBJDIR)/$(MAINFILE).o -c $(MAINFILE).c $(foreach folder, $(WORKDIR), -I $(folder)/$(INC))
@@ -30,9 +29,9 @@ Alltest : $(TESTS)
 
 $(TESTS): $(FNCTTEST) $(WORKDIR) run
 	@$(CC) $(FLAGS) $(OPTIONS) -o $(OBJDIR)/$(@).o -c $(filter %/$(@), $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=)))).c -I$(subst $(TESTDIR),$(INC), $(dir $(filter %/$(@), $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=)))))) -I $(FNCTTEST)/$(INC)
-	@$(CC) $(FLAGS) $(OPTIONS) -o $(dir $(filter %/$(@), $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=)))))$(OUT)/$(@).exe $(foreach fileo, $(notdir $(foreach fileh, $(wildcard $(subst $(TESTDIR),$(INC), $(dir $(filter %/$(@), $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=))))))*.h), $(fileh:.h=.o))), $(OBJDIR)/$(fileo)) $(OBJDIR)/$(@).o $(OBJDIR)/$(FNCTTEST).o
+	@$(CC) $(FLAGS) $(OPTIONS) -o $(OUT)/$(@).exe $(foreach fileo, $(notdir $(foreach fileh, $(wildcard $(subst $(TESTDIR),$(INC), $(dir $(filter %/$(@), $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=))))))*.h), $(fileh:.h=.o))), $(OBJDIR)/$(fileo)) $(OBJDIR)/$(@).o $(OBJDIR)/$(FNCTTEST).o
 	@echo Test : $(@)
-	@$(dir $(filter %/$(@), $(foreach folder, $(WORKDIR), $(foreach elem, $(wildcard $(folder)/$(TESTDIR)/*.c), $(elem:.c=)))))$(OUT)/$(@).exe
+	@$(OUT)/$(@).exe
 	@echo
 
 $(FNCTTEST): run

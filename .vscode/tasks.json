@@ -9,17 +9,16 @@
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"detail": "Create executable"
 		},
 		{
 			"type": "cppbuild",
 			"label": "Make Test",
 			"command": "make",
-			"args": ["Alltest"],
+			"args": [
+				"Alltest"
+			],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
@@ -28,6 +27,22 @@
 				"isDefault": true
 			},
 			"detail": "Lunch all test"
+		},
+		{
+			"type": "cppbuild",
+			"label": "Make just one test",
+			"command": "make",
+			"args": [
+				"${fileBasenameNoExtension}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Lunch one test"
 		}
 	]
 }
